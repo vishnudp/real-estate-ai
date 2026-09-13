@@ -1,0 +1,21 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+    container_name: realestate-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: realestate-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
