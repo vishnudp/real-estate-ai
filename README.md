@@ -793,7 +793,7 @@ docker compose exec ollama ollama list
 
 The model directory should be persisted with an Ollama Docker volume so models do not have to be downloaded after every container recreation.
 
-12. FREE PUBLIC DEPLOYMENT — RENDER + OPENROUTER
+# 12. FREE PUBLIC DEPLOYMENT — RENDER + OPENROUTER
 
 For the public POC, the recommended deployment is:
 
@@ -814,7 +814,7 @@ Render provides the application with its own public onrender.com URL.
 
     Important: Render Free is suitable for this short POC/demo deployment. It is not intended to be the final production infrastructure for a persistent real-estate intelligence platform.
 
-12.1 Deployment Architecture
+# 12.1 Deployment Architecture
 
 The project uses two runtime profiles.
 Local / Handover
@@ -886,7 +886,7 @@ FastAPI -> Ollama -> Qwen3
 PUBLIC:
 FastAPI -> OpenRouter -> Free LLM
 
-12.2 Why Ollama Is Not Deployed to Render Free
+# 12.2 Why Ollama Is Not Deployed to Render Free
 
 The local application uses Ollama because it provides a self-contained LLM runtime.
 
@@ -910,7 +910,8 @@ GPU                      Local hardware         Not required
 LLM hosting              Self-hosted            External API
 
 This keeps the Render service lightweight.
-12.3 OpenRouter Configuration
+
+# 12.3 OpenRouter Configuration
 
 The public POC uses OpenRouter as the LLM provider.
 
@@ -929,7 +930,8 @@ The openrouter/free router selects an available free model.
 Free-model availability and rate limits can change, so the public POC should not depend on a specific free model remaining available indefinitely.
 
 For a production deployment, use a deliberately selected model and appropriate paid API limits instead of relying on the free router.
-12.4 Local Ollama Configuration
+
+# 12.4 Local Ollama Configuration
 
 The local profile continues to use Ollama.
 
@@ -953,7 +955,8 @@ Render:
 DO NOT use host.docker.internal for Ollama.
 
 Render cannot access an Ollama instance running on the developer's laptop.
-12.5 Running the Cloud Docker Image Locally
+
+# 12.5 Running the Cloud Docker Image Locally
 
 Before deploying to Render, the cloud Docker image can be tested locally.
 
@@ -1003,7 +1006,8 @@ docker run --rm \
   real-estate-ai-cloud
 
 Do not commit the API key to GitHub or place it inside the Dockerfile.
-12.6 GitHub Repository
+
+# 12.6 GitHub Repository
 
 Create a GitHub repository and push the complete project.
 
@@ -1036,7 +1040,7 @@ Never commit:
 
 OPENROUTER_API_KEY
 
-12.7 Cloud Dockerfile
+# 12.7 Cloud Dockerfile
 
 The repository should contain:
 
@@ -1078,7 +1082,8 @@ FastAPI
 There is only one public Render Web Service.
 
 Do not expose a separate FastAPI service and React service for this POC.
-12.8 React API Configuration
+
+# 12.8 React API Configuration
 
 The React application must not hard-code:
 
@@ -1114,7 +1119,8 @@ https://YOUR-SERVICE.onrender.com
         +-- /api/properties/{id}/ai
 
 No separate frontend domain is required.
-12.9 Create the Render Web Service
+
+# 12.9 Create the Render Web Service
 
 Open the Render Dashboard.
 
@@ -1143,7 +1149,8 @@ Plan:
 Free
 
 Render will build the Docker image from the repository and start the resulting web service.
-12.10 Render Environment Variables
+
+# 12.10 Render Environment Variables
 
 In:
 
@@ -1170,7 +1177,8 @@ CORS_ORIGINS=*
 Use the exact variable names expected by the application.
 
 If the application has a different SQLite variable, preserve the existing application configuration rather than introducing duplicate variables.
-12.11 Render Port
+
+# 12.11 Render Port
 
 FastAPI must listen on:
 
@@ -1194,7 +1202,8 @@ Do not bind the production application to:
 localhost
 
 It must be reachable from Render's network.
-12.12 Deploy
+
+# 12.12 Deploy
 
 Click:
 
@@ -1221,7 +1230,8 @@ Render Web Service
    +--> OpenRouter
 
 Once the service becomes live, Render will provide a public HTTPS URL.
-12.13 Public URL
+
+# 12.13 Public URL
 
 The public POC will receive a URL similar to:
 
@@ -1236,7 +1246,8 @@ No DNS configuration is required.
 No Caddy or Nginx configuration is required.
 
 The evaluator can simply open the Render URL.
-12.14 Render Free Storage Limitation
+
+# 12.14 Render Free Storage Limitation
 
 This is an important limitation of the free POC.
 
@@ -1255,7 +1266,8 @@ Do not design the POC around the assumption that:
 /app/data/realestate.db
 
 will survive every restart/redeploy.
-12.15 POC Data Strategy
+
+# 12.15 POC Data Strategy
 
 For the short public demonstration, use a rebuildable/seeded dataset.
 
@@ -1310,7 +1322,8 @@ Does Chroma index exist?
 FastAPI starts
 
 This makes the POC recoverable after a restart.
-12.16 ChromaDB and Embeddings
+
+# 12.16 ChromaDB and Embeddings
 
 The local architecture can use:
 
@@ -1325,7 +1338,8 @@ The preferred approach for the short POC is to ship/rebuild the prepared Chroma 
 If runtime embeddings are required, implement a separate cloud embedding provider.
 
 Do not assume that an OpenRouter chat model being free means that embedding requests are also free.
-12.17 Public AI Request Flow
+
+# 12.17 Public AI Request Flow
 
 A typical request will follow:
 
@@ -1372,7 +1386,9 @@ FastAPI
          User
 
 The LLM should explain and summarize the deterministic intelligence produced by the application rather than independently inventing valuation or investment scores.
-12.18 Local vs Public Configuration
+
+# 12.18 Local vs Public Configuration
+
 Component	Local / Handover	Public POC
 Frontend	React	React
 Backend	FastAPI	FastAPI
@@ -1389,7 +1405,8 @@ Nginx	No	No
 VPS	No	No
 Persistent Disk	Docker volume	Not available on Free
 Public URL	No	*.onrender.com
-12.19 Render Free Limitations
+
+# 12.19 Render Free Limitations
 
 The free service is suitable for this POC but has important limitations.
 Service spin-down
@@ -1427,7 +1444,8 @@ OpenRouter free-model limits
 openrouter/free is appropriate for a small evaluator/demo workload, but free model availability and rate limits can change.
 
 For production, use a deliberately selected model with an appropriate API budget and limits.
-12.20 Deployment Verification
+
+# 12.20 Deployment Verification
 
 After the Render deployment reports Live, test the application in this order.
 1. Homepage
@@ -1494,7 +1512,7 @@ Ask:
 
 Give me the top opportunities I should investigate.
 
-12.21 Troubleshooting
+# 12.21 Troubleshooting
 Render container does not start
 
 Check the Render logs.
@@ -1547,7 +1565,8 @@ This is expected if the service restarts and the data was written only to the ep
 Use the seeded/rebuildable POC data strategy.
 
 For a real production deployment, move persistent data to appropriate managed storage/database/vector infrastructure.
-12.22 Final Deployment Architecture
+
+# 12.22 Final Deployment Architecture
 Local
 
                     LOCAL MACHINE
