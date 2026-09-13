@@ -4,7 +4,7 @@ AI-powered real-estate intelligence platform for property discovery, search, ana
 
 The POC combines public property data ingestion, structured/semantic search, deterministic real-estate intelligence engines and a local Ollama LLM behind a React + FastAPI application.
 
-> **POC status:** All planned functional stages are completed for the current 3-day POC scope.
+> **POC status:** All planned functional stages are completed for the current POC scope.
 
 ---
 
@@ -795,7 +795,7 @@ The model directory should be persisted with an Ollama Docker volume so models d
 
 12. FREE PUBLIC DEPLOYMENT — RENDER + OPENROUTER
 
-For the public 3-day POC, the recommended deployment is:
+For the public POC, the recommended deployment is:
 
 Render Free + OpenRouter Free Models
 
@@ -1250,7 +1250,7 @@ SQLite
 ChromaDB
 uploaded/generated runtime files
 
-Do not design the 3-day POC around the assumption that:
+Do not design the POC around the assumption that:
 
 /app/data/realestate.db
 
@@ -1391,7 +1391,7 @@ Persistent Disk	Docker volume	Not available on Free
 Public URL	No	*.onrender.com
 12.19 Render Free Limitations
 
-The free service is suitable for this 3-day POC but has important limitations.
+The free service is suitable for this POC but has important limitations.
 Service spin-down
 
 The free web service can spin down after a period of inactivity.
