@@ -19,6 +19,8 @@ chromadb/
 dist/
 build/
 
+node_modules/
+
 .pytest_cache/
 
 # Python virtual environment

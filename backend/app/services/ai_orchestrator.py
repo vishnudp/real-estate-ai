@@ -4,7 +4,8 @@ import json
 import re
 from typing import Any
 
-from app.ai.ollama_client import OllamaClient
+from app.ai.llm_client import LLMClient
+
 from app.services.ai_guardrails import AIGuardrails
 
 
@@ -76,12 +77,12 @@ Do not provide unrelated property information.
 
     def __init__(
         self,
-        ollama_client: OllamaClient | None = None,
+        llm_client: LLMClient | None = None,
     ) -> None:
 
-        self.ollama = (
-            ollama_client
-            or OllamaClient()
+        self.llm = (
+            llm_client
+            or LLMClient()
         )
 
         self.guardrails = AIGuardrails()
@@ -648,7 +649,7 @@ Return only the final answer that should be shown in the UI.
             context=context,
         )
 
-        raw_response = self.ollama.generate(
+        raw_response = self.llm.generate(
             system=self.SYSTEM_PROMPT,
             prompt=prompt,
         )

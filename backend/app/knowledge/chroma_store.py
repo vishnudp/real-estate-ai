@@ -1,17 +1,34 @@
+import os
+
 from pathlib import Path
 from typing import List, Dict, Any
 
 import chromadb
 
+from chromadb.utils.embedding_functions import (
+    DefaultEmbeddingFunction,
+)
+
+
 
 ROOT = Path(__file__).resolve().parents[3]
 
-CHROMA_PATH = ROOT / "data" / "chroma"
+# CHROMA_PATH = ROOT / "data" / "chroma"
+
+CHROMA_PATH = Path(
+    os.getenv(
+        "CHROMA_PATH",
+        "./data/chroma",
+    )
+)
+
 
 CHROMA_PATH.mkdir(
     parents=True,
     exist_ok=True,
 )
+
+embedding_function = DefaultEmbeddingFunction()
 
 
 client = chromadb.PersistentClient(
@@ -28,6 +45,7 @@ collection = client.get_or_create_collection(
             "DarGlobal and Wasalt real estate knowledge"
         )
     },
+    embedding_function=embedding_function,
 )
 
 

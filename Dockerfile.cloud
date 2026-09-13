@@ -1,0 +1,109 @@
+# ============================================================
+# Stage 1: Build React frontend
+# ============================================================
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /app/frontend
+
+# Install frontend dependencies
+COPY frontend/package*.json ./
+
+RUN npm ci
+
+# Copy frontend source
+COPY frontend/ ./
+
+# Production frontend uses same-origin API requests.
+ENV VITE_API_URL=""
+
+# Build React application
+RUN npm run build
+
+
+# ============================================================
+# Stage 2: Backend + React production container
+# ============================================================
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Prevent Python from creating .pyc files
+# and ensure logs are sent directly to stdout/stderr
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# ------------------------------------------------------------
+# System dependencies
+# ------------------------------------------------------------
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# ------------------------------------------------------------
+# Python dependencies
+# ------------------------------------------------------------
+COPY backend/requirements.txt /app/backend/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r /app/backend/requirements.txt
+
+# ------------------------------------------------------------
+# Chroma / embedding model cache
+# ------------------------------------------------------------
+ENV XDG_CACHE_HOME=/root/.cache
+
+COPY docker/chroma-cache/ /root/.cache/chroma/
+
+# Remove temporary Chroma database.
+RUN rm -rf /tmp/chroma-init
+
+# ------------------------------------------------------------
+# Copy backend application
+# ------------------------------------------------------------
+COPY backend /app/backend
+
+
+# ------------------------------------------------------------
+# Copy React production build
+# ------------------------------------------------------------
+RUN mkdir -p /app/backend/static
+
+COPY --from=frontend-builder /app/frontend/dist /app/backend/static
+
+
+# ------------------------------------------------------------
+# Runtime directories
+# ------------------------------------------------------------
+RUN mkdir -p /app/data
+RUN mkdir -p /app/data/chroma
+
+# Prebuilt Chroma semantic index
+COPY data/chroma /app/data/chroma
+
+
+# SQLite property database
+COPY backend/data/realestate.db /app/data/realestate.db
+
+# ------------------------------------------------------------
+# Environment
+# ------------------------------------------------------------
+ENV APP_ENV=production
+ENV PYTHONPATH=/app/backend
+
+ENV DATABASE_URL=sqlite:////app/data/realestate.db
+ENV CHROMA_PATH=/app/data/chroma
+
+
+# ------------------------------------------------------------
+# Render exposes the PORT environment variable.
+# Default to 10000 for local/container testing.
+# ------------------------------------------------------------
+EXPOSE 10000
+
+
+# ------------------------------------------------------------
+# Start FastAPI
+# ------------------------------------------------------------
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000}"]
