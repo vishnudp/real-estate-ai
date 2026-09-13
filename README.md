@@ -26,108 +26,9 @@ The LLM is used primarily for conversational understanding and explanation. Scor
 
 ---
 
-## 2. Completed Pipeline
+# 2. Architecture Diagram
 
-```text
-DarGlobal / Wasalt
-        |
-        v
-Data Ingestion
-        |
-        v
-Normalization
-        |
-        +--------------------+
-        |                    |
-        v                    v
-     SQLite              ChromaDB
-        |                    |
-        +---------+----------+
-                  |
-                  v
-           Query Understanding
-                  |
-                  v
-          Structured Search
-                  |
-                  v
-            Hybrid Search
-                  |
-                  v
-              Chat API
-                  |
-                  v
-           Advanced Search
-                  |
-                  v
-            Location Data
-                  |
-                  v
-        Location Intelligence
-                  |
-                  v
-     Infrastructure Intelligence
-                  |
-                  v
-        Comparable Engine
-                  |
-                  v
-         Valuation Engine
-                  |
-                  v
-          Growth Score Engine
-                  |
-                  v
-             Risk Engine
-                  |
-                  v
-        Investment Profile
-                  |
-                  v
-          Personalization
-                  |
-                  v
-             Deal Engine
-                  |
-                  v
-          AI Orchestration
-                  |
-                  v
-             Guardrails
-                  |
-                  v
-             React UI
-                  |
-                  v
-          Docker Deployment
-```
-
-### Completion checklist
-
-- [x] DarGlobal ingestion
-- [x] Wasalt ingestion
-- [x] Normalization
-- [x] SQLite persistence
-- [x] ChromaDB vector storage
-- [x] Query understanding
-- [x] Structured search
-- [x] Hybrid search
-- [x] Chat API
-- [x] Advanced search
-- [x] Location data
-- [x] Location Intelligence Engine
-- [x] Infrastructure Intelligence
-- [x] Comparable Engine
-- [x] Valuation Engine
-- [x] Growth Score Engine
-- [x] Risk Engine
-- [x] Investment Profile
-- [x] Hyper-personalization
-- [x] Deal Engine
-- [x] AI Orchestration
-- [x] Guardrails
-- [x] React UI
-- [x] Docker packaging
+<img width="1408" height="768" alt="architecture" src="https://github.com/user-attachments/assets/9898b2cb-5e49-4a6b-95ec-240498fe47aa" />
 
 ---
 
@@ -236,10 +137,110 @@ Normalization
 
 ---
 
-# 4. Complete Architecture
+## 4. Completed Pipeline
 
-<img width="1408" height="768" alt="architecture" src="https://github.com/user-attachments/assets/9898b2cb-5e49-4a6b-95ec-240498fe47aa" />
+```text
+DarGlobal / Wasalt
+        |
+        v
+Data Ingestion
+        |
+        v
+Normalization
+        |
+        +--------------------+
+        |                    |
+        v                    v
+     SQLite              ChromaDB
+        |                    |
+        +---------+----------+
+                  |
+                  v
+           Query Understanding
+                  |
+                  v
+          Structured Search
+                  |
+                  v
+            Hybrid Search
+                  |
+                  v
+              Chat API
+                  |
+                  v
+           Advanced Search
+                  |
+                  v
+            Location Data
+                  |
+                  v
+        Location Intelligence
+                  |
+                  v
+     Infrastructure Intelligence
+                  |
+                  v
+        Comparable Engine
+                  |
+                  v
+         Valuation Engine
+                  |
+                  v
+          Growth Score Engine
+                  |
+                  v
+             Risk Engine
+                  |
+                  v
+        Investment Profile
+                  |
+                  v
+          Personalization
+                  |
+                  v
+             Deal Engine
+                  |
+                  v
+          AI Orchestration
+                  |
+                  v
+             Guardrails
+                  |
+                  v
+             React UI
+                  |
+                  v
+          Docker Deployment
+```
 
+### Completion checklist
+
+- [x] DarGlobal ingestion
+- [x] Wasalt ingestion
+- [x] Normalization
+- [x] SQLite persistence
+- [x] ChromaDB vector storage
+- [x] Query understanding
+- [x] Structured search
+- [x] Hybrid search
+- [x] Chat API
+- [x] Advanced search
+- [x] Location data
+- [x] Location Intelligence Engine
+- [x] Infrastructure Intelligence
+- [x] Comparable Engine
+- [x] Valuation Engine
+- [x] Growth Score Engine
+- [x] Risk Engine
+- [x] Investment Profile
+- [x] Hyper-personalization
+- [x] Deal Engine
+- [x] AI Orchestration
+- [x] Guardrails
+- [x] React UI
+- [x] Docker packaging
+
+---
 
 # 5. Intelligence Layer
 
